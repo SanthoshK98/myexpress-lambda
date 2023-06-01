@@ -1,40 +1,22 @@
-// const axios = require('axios')
-// const url = 'http://checkip.amazonaws.com/';
-let response;
-
-/**
- *
- * Event doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-input-format
- * @param {Object} event - API Gateway Lambda Proxy Input Format
- *
- * Context doc: https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-context.html 
- * @param {Object} context
- *
- * Return doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
- * @returns {Object} object - API Gateway Lambda Proxy Output Format
- * 
- */
-// exports.lambdaHandler = async (event, context) => {
-//     try {
-//         // const ret = await axios(url);
-//         response = {
-//             'statusCode': 200,
-//             'body': JSON.stringify({
-//                 message: 'hello world',
-//                 // location: ret.data.trim()
-//             })
-//         }
-//     } catch (err) {
-//         console.log(err);
-//         return err;
-//     }
-
-//     return response
-// };
-
+const Redis = require('ioredis')
 const express = require('express')
 const serverless = require('serverless-http')
 const app = express()
+
+const redis = new Redis({
+    host:'my-cloud-redis.g4lpvv.ng.0001.aps1.cache.amazonaws.com',
+    port: 6379
+})
+
+const redisFunc = async()=>{
+    // Set a value
+await redis.set('myKey', 'myValue');
+
+// Get a value
+const value = await redis.get('myKey');
+console.log(value);
+}
+redisFunc()
 
 app.get('/get',(req,res)=>{
     return res.json({message:"Hello World"})
