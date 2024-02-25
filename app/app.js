@@ -4,7 +4,7 @@ const serverless = require('serverless-http')
 const app = express()
 
 const redis = new Redis({
-    host:'my-cloud-redis.g4lpvv.ng.0001.aps1.cache.amazonaws.com',
+    host:'mycloudredis.g4lpvv.ng.0001.aps1.cache.amazonaws.com',
     port: 6379
 })
 
